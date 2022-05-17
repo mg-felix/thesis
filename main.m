@@ -36,11 +36,12 @@ probability_of_changing = 0; % Probability of target not changing its direction 
 
 N = 3; % Number of UAVs
 vel_target = 1; % Defines Virtual Targets Velocities in rad/s, not the actual value
-r = 50; % Distance radius from real target~
+r = 50; % Distance radius from real target
+
 max_vel = 20; % Maximum allowed UAV velocity
 min_vel = 5; % Minimum allowed UAV velocity
-max_psi = pi/5; % Maximum allowed UAV rotation (psi dot)
-min_psi = -pi/5; % Minimum allowed UAV rotation (psi dot)
+max_psi = pi/3; % Maximum allowed UAV rotation (psi dot)
+min_psi = -pi/3; % Minimum allowed UAV rotation (psi dot)
 
 % UAVs INITIAL CONDITIONS 
 

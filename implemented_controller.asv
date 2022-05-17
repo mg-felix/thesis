@@ -14,8 +14,18 @@ current_y = input(6);
 current_psi = wrapToPi(input(7));
 current_v = input(8);
 
+
 current = [current_x; current_y];
 reference = [reference_x; reference_y];
+
+% current_x2 = input(9); % Positions of other UAVs
+% current_y2 = input(10);
+% current_x3 = input(11);
+% current_y3 = input(12);
+% 
+% 
+% current2 = [current_x2; current_y2];
+% current3 = [current_x3; current_y3];
 
 %% Artificial Potential Field (APF)
 
@@ -23,7 +33,7 @@ reference = [reference_x; reference_y];
 
 Kn = 0.006 ;
 
-path_radius = 1000; % Defines how far from the target the drone should circle
+path_radius = 10000; % Defines how far from the target the drone should circle
 
 alfa_t = 0; % Constant value
 
@@ -57,13 +67,13 @@ H = [2 0; 0 2]; % Hessian of phi
 
 I2 = -E*E;
 
-r_dot = R'*([current_v*cos(current_psi); current_v*sin(current_psi)] - vt); % Assuming we know the velocity of target
+r_dot = R'*([current_v*cos(current_psi); current_v*sin(current_psi)] - vt); % Assuming we know the velocity of target, vt
 
 mr = r_dot/norm(r_dot); % Unitary orientation vector for relative velocity
 
-delta = wrapToPi( angle(md(1) + md(2)*1i ) - angle(mr(1) + mr(2)*1i ) ); % Angle between md and mr, between -pi and pi
+delta = wrapToPi( - angle(md(1) + md(2)*1i ) + angle(mr(1) + mr(2)*1i ) ); % Angle between md and mr, between -pi and pi
 
-psi_prime = 1/(sqrt(phi)*2); % Derivative over Phi (prime sign ') 
+psi_prime = 1; %1/(sqrt(phi)*2); % Derivative of e = psi(phi(r)) over Phi (prime sign ') 
 
 e_dot = psi_prime*grad_phi'*r_dot; % Derivative over time of error
 
@@ -82,8 +92,8 @@ psi_dot_cmd = u;
 output(1) = current_v; 
 output(2) = psi_dot_cmd;
 
-%caption = sprintf('Commanded angular velocity = %f',  );
-%title(caption, 'FontSize', 20);
+caption = sprintf('Error = %f', e);
+title(caption, 'FontSize', 20);
 
 end
 

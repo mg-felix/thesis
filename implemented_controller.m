@@ -7,15 +7,22 @@ function [output] = implemented_controller(input)
 % Input
 reference_x = input(1);
 reference_y = input(2);
-% s_dot = input(3); 
-% phi = input(4);
-current_x = input(5);
-current_y = input(6);
-current_psi = wrapToPi(input(7));
-current_v = input(8);
+current_x2 = input(3); % Positions of other UAVs
+current_y2 = input(4);
+current_x3 = input(5);
+current_y3 = input(6);
+
+current_x = input(7);
+current_y = input(8);
+current_psi = wrapToPi(input(9));
+current_v = input(10);
+
 
 current = [current_x; current_y];
 reference = [reference_x; reference_y];
+
+current2 = [current_x2; current_y2];
+current3 = [current_x3; current_y3];
 
 %% Artificial Potential Field (APF)
 
@@ -23,7 +30,7 @@ reference = [reference_x; reference_y];
 
 Kn = 0.006 ;
 
-path_radius = 10000; % Defines how far from the target the drone should circle
+path_radius = 19000; % Defines how far from the target the drone should circle
 
 alfa_t = 0; % Constant value
 
@@ -43,9 +50,21 @@ v = E*grad_phi - Kn*e*grad_phi; % Vector field in the UAV position
 
 md = v/norm(v); % Unit orientation value for the vector field in the UAV position
 
+% Repulsive UAVs vector design
+
+repulsive_gain = 8; % Chooses how strong the repulsion should be. If 0, collision avoidance is off
+
+r_repulsive = current - current2 - current3; % Creates a new vector based on the distance between the UAVs
+
+vrepulsive = r_repulsive*repulsive_gain; % 
+
+v = v + vrepulsive; % Adds this influence to the vector field
+
+md = v/norm(v);
+
 % Path following controller design
 
-K_delta = 10;
+K_delta = 30;
 
 vt = [0;0]; % Target velocity
 
