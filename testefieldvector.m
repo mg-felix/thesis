@@ -1,6 +1,8 @@
 clear;
 clc;
 
+% Tests the generated field vector.
+
 [x,y] = meshgrid(-200:10:200,-200:10:200);
 
 reference = [0;0];
