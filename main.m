@@ -3,6 +3,7 @@
 % Consists in values definitions and calling the simulink block diagram 
 % where the controlling loop is implemented.
 
+
 %% Constants Definitions and Initial Conditions
 
 clear all;
@@ -38,21 +39,21 @@ vel_target = 1; % Defines Virtual Targets Velocities in rad/s, not the actual va
 r = 50; % Distance radius from real target~
 max_vel = 20; % Maximum allowed UAV velocity
 min_vel = 5; % Minimum allowed UAV velocity
-max_psi = pi/2; % Maximum allowed UAV rotation (psi dot)
-min_psi = -pi/2; % Minimum allowed UAV rotation (psi dot)
+max_psi = pi/5; % Maximum allowed UAV rotation (psi dot)
+min_psi = -pi/5; % Minimum allowed UAV rotation (psi dot)
 
 % UAVs INITIAL CONDITIONS 
 
-drone1_x0 = 50; % Initial Coordinates for each UAV
-drone1_y0 = 50;
-drone2_x0 = 100;
-drone2_y0 = 100;
-drone3_x0 = 200;
-drone3_y0 = 200;
+drone1_x0 = 5; % Initial Coordinates for each UAV
+drone1_y0 = 5;
+drone2_x0 = 12;
+drone2_y0 = 12;
+drone3_x0 = 15;
+drone3_y0 = 15;
 
-drone1_v0 = 20; % Initial velocities for each UAV
-drone2_v0 = 20;
-drone3_v0 = 20;
+drone1_v0 = 10; % Initial velocities for each UAV
+drone2_v0 = 10;
+drone3_v0 = 10;
 
 drone1_psi0 = 0; % In rad
 drone2_psi0 = 0;
