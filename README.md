@@ -1,5 +1,5 @@
 # thesis
-Code related to the development of my master thesis.
+Code related to the development of my master thesis. The topic is the control of N drones to follow a target in a predetermined way - in particular, in a circular equidistant from each other way. The proposed code solves this problem using vector fields. 
 
 # Files:
 
