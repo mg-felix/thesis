@@ -30,7 +30,7 @@ current3 = [current_x3; current_y3];
 
 Kn = 0.006 ;
 
-path_radius = 19000; % Defines how far from the target the drone should circle
+path_radius = 5000; % Defines how far from the target the drone should circle (not the actual value)
 
 alfa_t = 0; % Constant value
 
@@ -52,7 +52,7 @@ md = v/norm(v); % Unit orientation value for the vector field in the UAV positio
 
 % Repulsive UAVs vector design
 
-repulsive_gain = 8; % Chooses how strong the repulsion should be. If 0, collision avoidance is off
+repulsive_gain = 20; % Chooses how strong the repulsion should be. If 0, collision avoidance is off
 
 r_repulsive = current - current2 - current3; % Creates a new vector based on the distance between the UAVs
 
@@ -101,7 +101,7 @@ psi_dot_cmd = u;
 output(1) = current_v; 
 output(2) = psi_dot_cmd;
 
-caption = sprintf('Error = %f', e);
+caption = sprintf('Error = %f \nDistances = %f, %f, %f\n Heading angular velocity = %f\n', e, norm(current-current2), norm(current-current3), norm(current2-current3), psi_dot_cmd);
 title(caption, 'FontSize', 20);
 
 end
