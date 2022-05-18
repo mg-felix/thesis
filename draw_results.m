@@ -21,7 +21,6 @@ current_x3 = input(13);
 current_y3 = input(14);
 current_psi3 = input(15);
 
-
     % Target 1
     clearpoints(target_points1); % Deletes previous point
     addpoints(target_points1,target_x1,target_y1); % Draws where the new point should be

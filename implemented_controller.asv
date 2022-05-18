@@ -4,6 +4,8 @@ function [output] = implemented_controller(input)
 
 %% Definition of variables from input and output
 
+global vel_target_x vel_target_y
+
 % Input
 reference_x = input(1);
 reference_y = input(2);
@@ -30,7 +32,7 @@ current3 = [current_x3; current_y3];
 
 Kn = 0.006 ;
 
-path_radius = 12000; % Defines how far from the target the drone should circle
+path_radius = 150; % Defines how far from the target the drone should circle
 
 alfa_t = 0; % Constant value
 
@@ -44,7 +46,7 @@ phi = r'*r; % It is also = rx^2 + ry^2
 
 grad_phi = [2*r(1); 2*r(2)]; % Gradient is the vector [dgama/dx; dgama/dy]
 
-e = phi - path_radius;
+e = phi - path_radius^2;
 
 v = E*grad_phi - Kn*e*grad_phi; % Vector field in the UAV position
 
@@ -52,11 +54,11 @@ md = v/norm(v); % Unit orientation value for the vector field in the UAV positio
 
 % Repulsive UAVs vector design
 
-repulsive_gain = 0.5; % Chooses how strong the repulsion should be. If 0, collision avoidance is off
+repulsive_gain = 50; % Chooses how strong the repulsion should be. If 0, collision avoidance is off
 
 r_repulsive = current - current2 - current3; % Creates a new vector based on the distance between the UAVs
 
-vrepulsive = repulsive_gain; % 
+vrepulsive = r_repulsive*repulsive_gain; % 
 
 v = v + vrepulsive; % Adds this influence to the vector field
 
@@ -66,7 +68,7 @@ md = v/norm(v);
 
 K_delta = 30;
 
-vt = [0;0]; % Target velocity
+vt = [vel_target_x;vel_target_y]; % Target velocity
 
 alfa = current_psi; % Heading angle of UAV
 
@@ -101,7 +103,9 @@ psi_dot_cmd = u;
 output(1) = current_v; 
 output(2) = psi_dot_cmd;
 
-caption = sprintf('Error = %f', e);
+
+
+caption = sprintf('Error = %f \nDistances = %f, %f, %f\n Heading angular velocity = %f\n', e, norm(current-current2), norm(current-current3), norm(current2-current3), psi_dot_cmd);
 title(caption, 'FontSize', 20);
 
 end

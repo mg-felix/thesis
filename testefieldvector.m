@@ -13,23 +13,17 @@ R = [cos(alfa_t) -sin(alfa_t); sin(alfa_t) cos(alfa_t)]; % Rotation matrix from 
 
 E = [0 1; -1 0]; % Given
 
-repulsive_point = [30;0];
+repulsive_gain = 10;
 
-repulsive_gain = 100;
+vel = [0;0];
 
-for t = 1:100
-    repulsive_point = 30*[cos(t); sin(t)];
+for t = 1:1
+    reference = vel*t + reference;
     for i = 1:length(x)
 
         for j = 1:length(y)
 
             r = R'*([x(i,j);y(i,j)] - reference);
-
-            r_repulsive = [x(i,j); y(i,j)] - repulsive_point;
-
-            vrepulsive = r_repulsive*repulsive_gain;
-
-
 
             phi = r'*r; % It is also = rx^2 + ry^2
 
@@ -38,8 +32,6 @@ for t = 1:100
             e = phi - path_radius;
 
             v = E*grad_phi - Kn*e*grad_phi; % Vector field in the UAV position
-
-            v = v + vrepulsive;
 
             md = v/norm(v); % Unit orientation value for the vector field in the UAV position
 
