@@ -20,3 +20,5 @@ testfieldvector.m - Generates an image with the unitary vectors of the generated
 main - simplest working circular movement for the three UAVs, without collision avoidance.
 
 repulsive_tests -  experimenting with adding repulsive vectors to each one of the UAVs.
+
+cooperative_field_vector_approach - implementing the paper in https://doi.org/10.1016/j.conengprac.2022.105184
