@@ -17,8 +17,6 @@ testfieldvector.m - Generates an image with the unitary vectors of the generated
 
 # Branches:
 
-main - simplest working circular movement for the three UAVs, without collision avoidance.
+main - working implemented controller for 3 UAVs with the following features: collision avoidance, circular path following around a moving target (MPF using Vector Fields).
 
-repulsive_tests -  experimenting with adding repulsive vectors to each one of the UAVs.
-
-cooperative_field_vector_approach - implementing the paper in https://doi.org/10.1016/j.conengprac.2022.105184
+cooperative_field_vector_approach - implementing the paper in https://doi.org/10.1016/j.conengprac.2022.105184.
