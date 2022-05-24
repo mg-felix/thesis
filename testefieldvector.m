@@ -15,7 +15,7 @@ E = [0 1; -1 0]; % Given
 
 repulsive_gain = 10;
 
-vel = [0;0];
+vel = [0.2;0.2];
 
 for t = 1:1
     reference = vel*t + reference;

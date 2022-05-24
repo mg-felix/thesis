@@ -21,10 +21,10 @@ axis equal
 box(AxesHandle, 'on');
 hold(AxesHandle, 'on');
 
-xlim_1= -100;
-xlim_2= 100;
-ylim_1= -100;
-ylim_2= 100;
+xlim_1= -300;
+xlim_2= 300;
+ylim_1= -300;
+ylim_2= 300;
 hold off
 plot(AxesHandle,xlim_1,ylim_1)
 hold on

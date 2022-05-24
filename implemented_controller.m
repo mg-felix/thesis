@@ -4,7 +4,7 @@ function [output] = implemented_controller(input)
 
 %% Definition of variables from input and output
 
-global vel_target_x vel_target_y
+global vel_target_x vel_target_y radius theta_dot_constant
 
 % Input
 reference_x = input(1);
@@ -13,11 +13,12 @@ current_x2 = input(3); % Positions of other UAVs
 current_y2 = input(4);
 current_x3 = input(5);
 current_y3 = input(6);
+theta = input(7);
 
-current_x = input(7);
-current_y = input(8);
-current_psi = wrapToPi(input(9));
-current_v = input(10);
+current_x = input(8);
+current_y = input(9);
+current_psi = wrapToPi(input(10));
+current_v = input(11);
 
 
 current = [current_x; current_y];
@@ -30,9 +31,9 @@ current3 = [current_x3; current_y3];
 
 % Vector field design
 
-Kn = 0.006 ;
+Kn = 0.003 ;
 
-path_radius = 150; % Defines how far from the target the drone should circle
+path_radius = 200; % Defines how far from the target the drone should circle
 
 alfa_t = 0; % Constant value
 
@@ -54,11 +55,11 @@ md = v/norm(v); % Unit orientation value for the vector field in the UAV positio
 
 % Repulsive UAVs vector design
 
-repulsive_gain = 50; % Chooses how strong the repulsion should be. If 0, collision avoidance is off
+repulsive_gain = 100; % Chooses how strong the repulsion should be. If 0, collision avoidance is off
 
 r_repulsive = current - current2 - current3; % Creates a new vector based on the distance between the UAVs
 
-vrepulsive = r_repulsive*repulsive_gain; % 
+vrepulsive = (1./r_repulsive)*repulsive_gain; % 
 
 v = v + vrepulsive; % Adds this influence to the vector field
 
@@ -94,18 +95,82 @@ md_dot = -1/norm(v)*E*md*md'*E*v_dot; % Derivative over time of unitary vector f
 
 s = current_v;
 
-u = norm(r_dot)/s * (-md_dot'*E*md - K_delta*delta)/(mr'*R'*m); % Control imput - angular velocity
+u_psi_dot = norm(r_dot)/s * (-md_dot'*E*md - K_delta*delta)/(mr'*R'*m); % Control imput - angular velocity
+
+% Velocity command calculation - according to https://doi.org/10.1016/j.conengprac.2022.105184
+
+% Constant values attributions
+
+vs = 5; % Reference speed
+
+kx = 2;
+ky = 2;
+kpsi = 1;
+kdelta = 1;
+
+k1 = 1;
+k2 = 1;
+k3 = 1;
+
+% UAV data
+
+v = 0; % "Wind"
+u = current_v; 
+
+% Desired target
+
+xd = radius*cos(theta_dot_constant*theta);
+yd = radius*sin(theta_dot_constant*theta);
+
+
+xd_prime = -radius*theta_dot_constant*sin(theta_dot_constant*theta);
+yd_prime = radius*theta_dot_constant*cos(theta_dot_constant*theta);
+
+% Error
+
+zx = current(1) - xd;
+zy = current(2) - yd;
+
+% Other auxiliar variables
+
+delta = zx*xd_prime + zy*yd_prime;
+
+Phix = sqrt(zx^2 + kx);
+Phiy = sqrt(zy^2 + ky);
+Phidelta = sqrt(delta^2 + kdelta);
+
+F1 = xd_prime - k1*zx/Phix;
+F2 = yd_prime - k2*zy/Phiy;
+F3 = vs + (delta - e)/Phidelta;
+
+psi_r = atan2(F1,F2);
+psi_w = current_psi;
+
+zpsi = psi_w - psi_r;
+
+% Phipsi = sqrt(zpsi^2 + kpsi);
+
+% beta = atan(v/u); % Slideslip angle
+% betad = 0; % betad = beta_dot, the derivative of beta over time. Since there is no wind, the slideslip will always be 0 and hence, the derivative is -1
+
+% psi_r_dot = 0; % ?????
+
+% Control values calculation
+
+Ur = vs * sqrt(F1^2 + F2^2); % Commanded velocity
+% rr = -k3*zpsi/Phipsi - betad + psi_r_dot; % Commanded heading angular velocity
 
 %% Outputs the results
 
-psi_dot_cmd = u;
+v_cmd = current_v; % Ur;
+psi_dot_cmd = u_psi_dot;
 
-output(1) = current_v; 
+output(1) = v_cmd; 
 output(2) = psi_dot_cmd;
 
 
 
-caption = sprintf('Error = %f \nDistances = %f, %f, %f\n Heading angular velocity = %f\n', e, norm(current-current2), norm(current-current3), norm(current2-current3), psi_dot_cmd);
+caption = sprintf('Error = %f \nDistances = %f, %f, %f\n Heading angular velocity = %f\nVelocity = %f', e, norm(current-current2), norm(current-current3), norm(current2-current3), psi_dot_cmd, v_cmd);
 title(caption, 'FontSize', 20);
 
 end
