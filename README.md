@@ -11,7 +11,7 @@ implemented_controller.m - Function that generates the control inputs.
 
 draw_results.m - Function that draws the results every iteration.
 
-start_drawing.m - Initiates the drawing of results,
+start_drawing.m - Initiates the drawing of results.
 
 testfieldvector.m - Generates an image with the unitary vectors of the generated vector field (used only for testing).
 
