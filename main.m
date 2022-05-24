@@ -23,7 +23,7 @@ Ttotal = 200; % Total simulation time
 
 % TARGET VARIABLES
 
-vel_target_x = 1;
+vel_target_x = sqrt(3^2/2);
 vel_target_y = 0;
 
 theta_dot_constant = 0.0001; % How much the path moves after Ts seconds, evey Ts, theta increases 1. And the position is calculated as cos(theta*theta_dot_constant).
@@ -50,9 +50,9 @@ drone2_y0 = 60;
 drone3_x0 = -80;
 drone3_y0 = 80;
 
-drone1_v0 = 15; % Initial velocities for each UAV
-drone2_v0 = 15;
-drone3_v0 = 15;
+drone1_v0 = 20; % Initial velocities for each UAV
+drone2_v0 = 20;
+drone3_v0 = 20;
 
 drone1_psi0 = 0; % In rad
 drone2_psi0 = 0;
