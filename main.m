@@ -46,9 +46,9 @@ min_psi = -pi/4; % Minimum allowed UAV rotation (psi dot)
 drone1_x0 = 50; % Initial Coordinates for each UAV
 drone1_y0 = 50;
 drone2_x0 = -50;
-drone2_y0 = 50;
+drone2_y0 = 60;
 drone3_x0 = -80;
-drone3_y0 = -80;
+drone3_y0 = 80;
 
 drone1_v0 = 15; % Initial velocities for each UAV
 drone2_v0 = 15;
