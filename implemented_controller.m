@@ -55,7 +55,7 @@ md = v/norm(v); % Unit orientation value for the vector field in the UAV positio
 
 % Repulsive UAVs vector design
 
-repulsive_gain = 1000; % Chooses how strong the repulsion should be. If 0, collision avoidance is off
+repulsive_gain = 800; % Chooses how strong the repulsion should be. If 0, collision avoidance is off
 
 r_repulsive1 = current - current2; % Creates a new vector based on the distance between the UAVs
 r_repulsive2 = current - current3; % Creates a new vector based on the distance between the UAVs
