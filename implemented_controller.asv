@@ -169,7 +169,7 @@ psi_dot_cmd = u_psi_dot;
 output(1) = v_cmd; 
 output(2) = psi_dot_cmd;
 
-err = norm(current - reference) - radius;
+err = 
 
 caption = sprintf('Error = %f \nDistances = %f, %f, %f\n Heading angular velocity = %f\nVelocity = %f', err, norm(current-current2), norm(current-current3), norm(current2-current3), psi_dot_cmd, v_cmd);
 title(caption, 'FontSize', 20);
