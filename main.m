@@ -18,12 +18,12 @@ def_seed = randi(1000); % Defines random seed for random target movement
 
 % FLAGS
 
-repulsive_flag = 0;
+repulsive_flag = 0; % 0 - turns the collision avoidance off | 1 - turns it on
 
 % TIME VARIABLES 
 
 Ts = 0.05; % Sampling time
-Ttotal = 200; % Total simulation time
+Ttotal = 20; % Total simulation time
 
 % TARGET VARIABLES
 
@@ -61,7 +61,7 @@ drone3_v0 = 20;
 drone1_psi0 = 0; % In rad
 drone2_psi0 = 0;
 drone3_psi0 = 0;
-
+    
 %% Starts showing the results
 
 start_drawing;
@@ -69,3 +69,16 @@ start_drawing;
 %% Calling simulink file 
 
  sim('arquitetura');
+ 
+global err1 err2 err3
+
+close all;
+
+plot(err1)
+title('Red UAV')
+figure;
+title('Green UAV')
+plot(err2)
+figure;
+title('Blue UAV')
+plot(err3)

@@ -31,7 +31,7 @@ current3 = [current_x3; current_y3];
 
 % Vector field design
 
-Kn = 0.003 ;
+Kn = 0.001 ;
 
 path_radius = 200; % Defines how far from the target the drone should circle
 
@@ -55,12 +55,12 @@ md = v/norm(v); % Unit orientation value for the vector field in the UAV positio
 
 % Repulsive UAVs vector design
 
-repulsive_gain = 800*repulsive_flag; % Chooses how strong the repulsion should be. If 0, collision avoidance is off
+repulsive_gain = 400*repulsive_flag; % Chooses how strong the repulsion should be. If 0, collision avoidance is off
 
 r_repulsive1 = current - current2; % Creates a new vector based on the distance between the UAVs
 r_repulsive2 = current - current3; % Creates a new vector based on the distance between the UAVs
 
-vrepulsive = ( (r_repulsive1)/norm(r_repulsive1) + (r_repulsive2)/norm(r_repulsive2))*repulsive_gain; % Add if = 0 in division;
+vrepulsive = ( (r_repulsive1)/norm(r_repulsive1) + (r_repulsive2)/norm(r_repulsive2) ) *repulsive_gain; % Add if = 0 in division;
 
 v = v + vrepulsive; % Adds this influence to the vector field
 
