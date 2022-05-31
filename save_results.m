@@ -2,7 +2,7 @@ function [] = save_results(input)
 %S Summary of this function goes here
 %   Detailed explanation goes here
 
-global Ts x1 x2 x3 y1 y2 y3 psi1 psi2 psi3 err1 err2 err3 radius
+%global Ts x1 x2 x3 y1 y2 y3 psi1 psi2 psi3 err1 err2 err3 radius
 
 time = input(16)/Ts + 1;
 

@@ -1,7 +1,7 @@
 function [] = draw_results(input)
 %DRAW_RESULTS Draws the new positions for target and UAVs
 
-global drone_vertices_x drone_vertices_y target_points1 UAV_1_patch target_points2 UAV_2_patch target_points3 UAV_3_patch radius
+global drone_vertices_x drone_vertices_y target_points1 UAV_1_patch target_points2 UAV_2_patch target_points3 UAV_3_patch radius circle_handle
 
 
 %% Drawing
@@ -22,8 +22,11 @@ global drone_vertices_x drone_vertices_y target_points1 UAV_1_patch target_point
     current_y3 = input(14);
     current_psi3 = input(15);
 
-    viscircles([target_x1 target_y1], radius,'LineStyle', ':');
-
+    delete(circle_handle);
+    th = 0:pi/50:2*pi;
+    xunit = radius * cos(th) + target_x1;
+    yunit = radius * sin(th) + target_y1;
+    circle_handle = plot(xunit, yunit,'c');
     
         % Target 1
         clearpoints(target_points1); % Deletes previous point
@@ -50,6 +53,7 @@ global drone_vertices_x drone_vertices_y target_points1 UAV_1_patch target_point
         UAV_3_patch = patch(current_y3 + drone_vertices_x, current_x3 + drone_vertices_y,'b'); % Draws new drone position
         rotate(UAV_3_patch, [0 0 1], -rad2deg(current_psi3), [current_y3 current_x3 0]); % Draws new drone orientation
 
+        
     hold on; % Keep same figure
     
     drawnow; % Update the drawings

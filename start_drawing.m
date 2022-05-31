@@ -4,8 +4,8 @@ function [] = start_drawing()
 
 % Defining parameters
 
-global drone_vertices_x drone_vertices_y FigureHandle 
-global target_points1 target_points2 target_points3 UAV_1_patch UAV_2_patch UAV_3_patch
+global drone_vertices_x drone_vertices_y FigureHandle circle_handle radius
+global target_points1 target_points2 target_points3 UAV_1_patch UAV_2_patch UAV_3_patch x0 y0
 global drone1_x0 drone1_y0 drone2_x0 drone2_y0 drone3_x0 drone3_y0 drone1_psi0 drone2_psi0 drone3_psi0
 
 I = imread('mar_fundo.jpg');
@@ -52,6 +52,8 @@ rotate(UAV_2_patch, [0 0 1], -rad2deg(drone2_psi0), [drone2_y0 drone2_x0 0]); % 
 target_points3 = animatedline('Marker','o','Color','b');
 UAV_3_patch = patch(drone3_y0 + drone_vertices_x, drone3_x0 + drone_vertices_y,'b'); % Defines drone position
 rotate(UAV_3_patch, [0 0 1], -rad2deg(drone3_psi0), [drone3_y0 drone3_x0 0]); % Defines drone orientation
+
+circle_handle = plot(x0,y0,'o','MarkerSize',radius);
 
 %h = image(xlim,-ylim,I); 
 %uistack(h,'bottom')
