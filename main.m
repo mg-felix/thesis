@@ -10,7 +10,7 @@ clear all;
 clc;
 close all;
 
-global Ts Ttotal x0 y0 def_seed vel_target_x vel_target_y theta_dot_constant radius repulsive_flag
+global Ts Ttotal x0 y0 def_seed vel_target_x vel_target_y theta_dot_constant radius repulsive_mine_flag repulsive_gaussian_flag
 global max_vel min_vel max_psi min_psi % Global variables to be used throughout the program
 global drone1_x0 drone1_y0 drone2_x0 drone2_y0 drone3_x0 drone3_y0 drone1_psi0 drone2_psi0 drone3_psi0
 
@@ -18,12 +18,13 @@ def_seed = randi(1000); % Defines random seed for random target movement
 
 % FLAGS
 
-repulsive_flag = 0; % 0 - turns the collision avoidance off | 1 - turns it on
+repulsive_mine_flag = 0; % 0 - turns the collision avoidance off | 1 - turns it on
+repulsive_gaussian_flag = 1;
 
 % TIME VARIABLES 
 
 Ts = 0.05; % Sampling time
-Ttotal = 5 ; % Total simulation time
+Ttotal = 500 ; % Total simulation time
 
 % TARGET VARIABLES
 
@@ -68,10 +69,10 @@ start_drawing;
 
 %% Calling simulink file 
 
- sim('arquitetura');
- 
-close all;
+sim('arquitetura');
 
 %% Plot error results and UAV paths
+
+close all;
 
 show_results(ans);

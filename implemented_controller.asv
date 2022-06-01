@@ -57,8 +57,8 @@ md = v/norm(v); % Unit orientation value for the vector field in the UAV positio
 
 repulsive_gain = 400*repulsive_mine_flag; % Chooses how strong the repulsion should be. If 0, collision avoidance is off
 
-A = 1000;
-sigma = 100;
+A = 1000000;
+sigma = 100000;
 expected_value = [100; 100];
 
 repulsive_gaussian = repulsive_gaussian_flag*A*exp( ( -(current - expected_value)'*(current - expected_value) )/(2*sigma^2) ); % 
