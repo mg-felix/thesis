@@ -24,11 +24,14 @@ testfieldvector.m - Generates an image with the unitary vectors of the generated
 
 main - working implemented controller for 3 UAVs with the following features: collision avoidance, circular path following around a moving target (MPF using Vector Fields).
 
-treshold_implementation - experimenting with using the collision avoidance algorith only when the UAVs get close to each other. 
+coordinated-error - follows the work implemented in the 3 reference paper mentioned. 
 
 Reference Papers:
 
-https://doi.org/10.1016/j.ifacol.2017.08.1340 - to design a vector field and control the heading angle rate based on that field. 
+[1] - https://doi.org/10.1016/j.ifacol.2017.08.1340 - to design a vector field and control the heading angle rate based on that field. 
 
-https://doi.org/10.1016/j.conengprac.2022.105184 - to control the velocity (not yet implemented)
+[2] - https://doi.org/10.1109/ICRA.2014.6907828 - to create the repulsive vectors around each UAV.
 
+----------------------------------------------------------------------------------------------------------------------------
+
+[3] - https://doi.org/10.1016/j.conengprac.2022.105184 - a different approach where a path is defined for each UAV and a coordinated error is used to calculate the velocity inputs so that each vehicle stays at 120 degrees spaced of each other. It also follows the vector field approach.
