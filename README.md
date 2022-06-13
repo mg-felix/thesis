@@ -18,20 +18,20 @@ draw_results.m - Function that draws the results every iteration.
 
 start_drawing.m - Initiates the drawing of results.
 
+show_results.m - Shows the results at the end of the simulation. Data on errors, speed and positions through time.
+
 testfieldvector.m - Generates an image with the unitary vectors of the generated vector field (used only for testing).
 
 # Branches:
 
 main - working implemented controller for 3 UAVs with the following features: collision avoidance, circular path following around a moving target (MPF using Vector Fields).
 
-coordinated-error - follows the work implemented in the 3 reference paper mentioned. 
-
 Reference Papers:
 
-[1] - https://doi.org/10.1016/j.ifacol.2017.08.1340 - to design a vector field and control the heading angle rate based on that field. 
+[1] - https://doi.org/10.1016/j.ifacol.2017.08.1340 - to design a vector field and control the heading angle rate based on that field.
 
-[2] - https://doi.org/10.1109/ICRA.2014.6907828 - to create the repulsive vectors around each UAV.
+[2] - https://doi.org/10.1016/j.automatica.2018.11.004 - to coordinate the vehicles speeds and keep the UAV equidistant.
+
+[3] - https://doi.org/10.1109/ICRA.2014.6907828 - to create the repulsive vectors around each UAV. (still need to prove the convergence mathematically to use it).
 
 ----------------------------------------------------------------------------------------------------------------------------
-
-[3] - https://doi.org/10.1016/j.conengprac.2022.105184 - a different approach where a path is defined for each UAV and a coordinated error is used to calculate the velocity inputs so that each vehicle stays at 120 degrees spaced of each other. It also follows the vector field approach.
