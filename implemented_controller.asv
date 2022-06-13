@@ -4,7 +4,7 @@ function [output] = implemented_controller(input)
 
 %% Definition of variables from input and output
 
-global vel_target_x vel_target_y radius theta_dot_constant repulsive_mine_flag repulsive_gaussian_flag
+global vel_target_x vel_target_y radius repulsive_mine_flag repulsive_gaussian_flag theta
 
 % Input
 reference_x = input(1);
@@ -13,12 +13,15 @@ current_x2 = input(3); % Positions of other UAVs
 current_y2 = input(4);
 current_x3 = input(5);
 current_y3 = input(6);
-theta = input(7);
 
-current_x = input(8);
-current_y = input(9);
-current_psi = wrapToPi(input(10));
-current_v = input(11);
+l = input(7);
+l_other = input(8);
+l_dot_other = input(9);
+
+current_x = input(10);
+current_y = input(11);
+current_psi = wrapToPi(input(12));
+current_v = input(13);
 
 
 current = [current_x; current_y];
@@ -26,6 +29,8 @@ reference = [reference_x; reference_y];
 
 current2 = [current_x2; current_y2];
 current3 = [current_x3; current_y3];
+
+
 
 %% Artificial Potential Field (APF)
 
@@ -57,8 +62,8 @@ md = v/norm(v); % Unit orientation value for the vector field in the UAV positio
 
 repulsive_gain = 400*repulsive_mine_flag; % Chooses how strong the repulsion should be. If 0, collision avoidance is off
 
-A = 1000000;
-sigma = 100000;
+A = 1000;
+sigma = 100;
 expected_value = [100; 100];
 
 repulsive_gaussian = repulsive_gaussian_flag*A*exp( ( -(current - expected_value)'*(current - expected_value) )/(2*sigma^2) ); % 
@@ -76,7 +81,7 @@ md = v/norm(v);
 
 K_delta = 30;
 
-vt = [vel_target_x;vel_target_y]; % Target velocity
+vt = [vel_target_x; vel_target_y]; % Target velocity
 
 alfa = current_psi; % Heading angle of UAV
 
@@ -104,76 +109,61 @@ s = current_v;
 
 u_psi_dot = norm(r_dot)/s * (-md_dot'*E*md - K_delta*delta)/(mr'*R'*m); % Control imput - angular velocity
 
-% Velocity command calculation - according to https://doi.org/10.1016/j.conengprac.2022.105184
 
-% Constant values attributions
+%% Controlling the velocity to keep them equally spaced in the path
 
-vs = 5; % Reference speed
+k1 = 0.0001; % Gain constants, > 0
+beta = 6;
+ku = 5;
 
-kx = 2;
-ky = 2;
-kpsi = 1;
-kdelta = 1;
+theta = l/radius;
 
-k1 = 1;
-k2 = 1;
-k3 = 1;
-
-% UAV data
-
-v = 0; % "Wind"
-u = current_v; 
-
-% Desired target
-
-xd = radius*cos(theta_dot_constant*theta);
-yd = radius*sin(theta_dot_constant*theta);
+psi_f = atan2(cos(theta),sin(theta)); % Angle of tangent on the virtual particle relative to x axis in {I}
+psi_dash = current_psi - psi_f;
 
 
-xd_prime = -radius*theta_dot_constant*sin(theta_dot_constant*theta);
-yd_prime = radius*theta_dot_constant*cos(theta_dot_constant*theta);
+vpx = vt(1); % Target velocity
+vpy = vt(2);
 
-% Error
+wp = 0; % Target angular velocity
 
-zx = current(1) - xd;
-zy = current(2) - yd;
+delta_x = radius; % pf - pp = radius
+delta_y = radius;
 
-% Other auxiliar variables
+delta_l = 0;%       2*pi*radius/3; % Separation between vehicles
 
-delta = zx*xd_prime + zy*yd_prime;
+Sigma = -(vpx - wp*delta_y)*cos(psi_f) - (vpy - wp*delta_x)*sin(psi_f); 
 
-Phix = sqrt(zx^2 + kx);
-Phiy = sqrt(zy^2 + ky);
-Phidelta = sqrt(delta^2 + kdelta);
+R = [cos(psi_f) sin(psi_f); -sin(psi_f) cos(psi_f)];
 
-F1 = xd_prime - k1*zx/Phix;
-F2 = yd_prime - k2*zy/Phiy;
-F3 = vs + (delta - e)/Phidelta;
+Fx = R*([current_x - radius*cos(theta); current_y - radius*sin(theta)]);
 
-psi_r = atan2(F1,F2);
-psi_w = current_psi;
+Fx = Fx(1);
 
-zpsi = psi_w - psi_r;
+l_dot = current_v*cos(psi_dash) + Sigma + k1*Fx; % Rate of progression of the virtual target along the desired path
+l_tilde = l - l_other + delta_l; % Coordination error
 
-% Phipsi = sqrt(zpsi^2 + kpsi);
+u = l_dot_other - beta*tanh(ku*l_tilde);
 
-% beta = atan(v/u); % Slideslip angle
-% betad = 0; % betad = beta_dot, the derivative of beta over time. Since there is no wind, the slideslip will always be 0 and hence, the derivative is -1
+v = (u - Sigma - k1*Fx)/cos(psi_dash); % Calculated input for velocity
 
-% psi_r_dot = 0; % ?????
+%% Make it different for the leader UAV
 
-% Control values calculation
+if l_dot_other == l_other && l_other == -1000
+    v = current_v;
+end
 
-Ur = vs * sqrt(F1^2 + F2^2); % Commanded velocity
-% rr = -k3*zpsi/Phipsi - betad + psi_r_dot; % Commanded heading angular velocity
 
 %% Outputs the results
 
-v_cmd = current_v; % Ur;
+v_cmd = v; 
 psi_dot_cmd = u_psi_dot;
 
 output(1) = v_cmd; 
 output(2) = psi_dot_cmd;
+
+output(3) = l;
+output(4) = l_dot;
 
 err = norm(current - reference) - radius;
 

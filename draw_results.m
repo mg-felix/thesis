@@ -11,16 +11,18 @@ global drone_vertices_x drone_vertices_y target_points1 UAV_1_patch target_point
     current_x1 = input(3);
     current_y1 = input(4);
     current_psi1 = input(5);
-    target_x2 = input(6);
-    target_y2 = input(7);
-    current_x2 = input(8);
-    current_y2 = input(9);
-    current_psi2 = input(10);
-    target_x3 = input(11);
-    target_y3 = input(12);
-    current_x3 = input(13);
-    current_y3 = input(14);
-    current_psi3 = input(15);
+%
+    target_x2 = input(7);
+    target_y2 = input(8);
+    current_x2 = input(9);
+    current_y2 = input(10);
+    current_psi2 = input(11);
+%
+    target_x3 = input(13);
+    target_y3 = input(14);
+    current_x3 = input(15);
+    current_y3 = input(16);
+    current_psi3 = input(17);
 
     delete(circle_handle);
     th = 0:pi/50:2*pi;
@@ -52,7 +54,6 @@ global drone_vertices_x drone_vertices_y target_points1 UAV_1_patch target_point
         delete(UAV_3_patch); % Deletes previous patch
         UAV_3_patch = patch(current_y3 + drone_vertices_x, current_x3 + drone_vertices_y,'b'); % Draws new drone position
         rotate(UAV_3_patch, [0 0 1], -rad2deg(current_psi3), [current_y3 current_x3 0]); % Draws new drone orientation
-
         
     hold on; % Keep same figure
     

@@ -11,14 +11,17 @@ reference = [Data(:,1);Data(2)];
 x1 = Data(:,3);
 y1 = Data(:,4);
 psi1 = Data(:,5);
+v1 = Data(:,6);
 
-x2 = Data(:,8);
-y2 = Data(:,9);
-psi2 = Data(:,10);
+x2 = Data(:,9);
+y2 = Data(:,10);
+psi2 = Data(:,11);
+v2 = Data(:,12);
 
-x3 = Data(:,13);
-y3 = Data(:,14);
-psi3 = Data(:,15);
+x3 = Data(:,15);
+y3 = Data(:,16);
+psi3 = Data(:,17);
+v3 = Data(:,18);
 
 for i=1:length(x1)
     err1(i) = norm([x1(i);y1(i)] - reference(i)) - radius;
@@ -26,6 +29,10 @@ for i=1:length(x1)
     err2(i) = norm([x2(i);y2(i)] - reference(i)) - radius;
 
     err3(i) = norm([x3(i);y3(i)] - reference(i)) - radius;
+    
+    distance1(i) = norm([x1(i);y1(i)] - [x2(i);y2(i)]);
+    distance2(i) = norm([x1(i);y1(i)] - [x3(i);y3(i)]);
+    distance3(i) = norm([x2(i);y2(i)] - [x3(i);y3(i)]);
 end
 
 plot(0:Ts:length(err2)*Ts - Ts,err1,'r')
@@ -38,11 +45,35 @@ xlabel('Time (s)')
 ylabel('Lateral Error (m)')
 
 figure;
-plot(x1,y1,'r')
+plot(y1,x1,'r')
 hold on;
-plot(x2,y2,'g')
+plot(y2,x2,'g')
 hold on;
-plot(x3,y3,'b')
+plot(y3,x3,'b')
+title('Path drawn by each UAV')
+xlabel('x (m)')
+ylabel('y (m)')
+
+figure;
+plot(0:Ts:length(err2)*Ts - Ts,distance1,'r')
+hold on;
+plot(0:Ts:length(err2)*Ts - Ts,distance2,'g')
+hold on;
+plot(0:Ts:length(err2)*Ts - Ts,distance3,'b')
+title('Distances between UAVs')
+xlabel('Time (s)')
+ylabel('Distances (m)')
+
+figure;
+plot(0:Ts:length(err2)*Ts - Ts,v1,'r')
+hold on;
+plot(0:Ts:length(err2)*Ts - Ts,v2,'g')
+hold on;
+plot(0:Ts:length(err2)*Ts - Ts,v3,'b')
+title('Velocities of each UAV')
+xlabel('Time (s)')
+ylabel('Velocity (m/s)')
+
 
 
 end

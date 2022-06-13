@@ -10,7 +10,7 @@ clear all;
 clc;
 close all;
 
-global Ts Ttotal x0 y0 def_seed vel_target_x vel_target_y theta_dot_constant radius repulsive_mine_flag repulsive_gaussian_flag
+global Ts Ttotal x0 y0 def_seed vel_target_x vel_target_y radius repulsive_mine_flag repulsive_gaussian_flag
 global max_vel min_vel max_psi min_psi % Global variables to be used throughout the program
 global drone1_x0 drone1_y0 drone2_x0 drone2_y0 drone3_x0 drone3_y0 drone1_psi0 drone2_psi0 drone3_psi0
 
@@ -19,19 +19,18 @@ def_seed = randi(1000); % Defines random seed for random target movement
 % FLAGS
 
 repulsive_mine_flag = 0; % 0 - turns the collision avoidance off | 1 - turns it on
-repulsive_gaussian_flag = 1;
+repulsive_gaussian_flag = 0;
 
 % TIME VARIABLES 
 
 Ts = 0.05; % Sampling time
-Ttotal = 500 ; % Total simulation time
+Ttotal = 300; % Total simulation time
 
 % TARGET VARIABLES
 
-vel_target_x = sqrt(6^2/2);
+vel_target_x = sqrt(0^2/2);
 vel_target_y = 0;
 
-theta_dot_constant = 0.0001; % How much the path moves after Ts seconds, evey Ts, theta increases 1. And the position is calculated as cos(theta*theta_dot_constant).
 radius = 200; % Radius for the virtual references
 
 % TARGET INITIAL CONDITIONS
@@ -55,7 +54,7 @@ drone2_y0 = 60;
 drone3_x0 = 70;
 drone3_y0 = 70;
 
-drone1_v0 = 20; % Initial velocities for each UAV
+drone1_v0 = 16; % Initial velocities for each UAV
 drone2_v0 = 20;
 drone3_v0 = 20;
 
