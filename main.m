@@ -28,7 +28,7 @@ Ttotal = 300; % Total simulation time
 
 % TARGET VARIABLES
 
-vel_target_x = sqrt(0^2/2);
+vel_target_x = sqrt(3^2/2);
 vel_target_y = 0;
 
 radius = 200; % Radius for the virtual references
@@ -54,7 +54,7 @@ drone2_y0 = 60;
 drone3_x0 = 70;
 drone3_y0 = 70;
 
-drone1_v0 = 16; % Initial velocities for each UAV
+drone1_v0 = 15; % Initial velocities for each UAV
 drone2_v0 = 20;
 drone3_v0 = 20;
 

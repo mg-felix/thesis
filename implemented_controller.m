@@ -114,7 +114,7 @@ u_psi_dot = norm(r_dot)/s * (-md_dot'*E*md - K_delta*delta)/(mr'*R'*m); % Contro
 
 k1 = 0.0001; % Gain constants, > 0
 beta = 6;
-ku = 5;
+ku = 10;
 
 theta = l/radius;
 
