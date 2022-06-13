@@ -32,6 +32,8 @@ Reference Papers:
 
 [2] - https://doi.org/10.1016/j.automatica.2018.11.004 - to coordinate the vehicles speeds and keep the UAV equidistant.
 
-[3] - https://doi.org/10.1109/ICRA.2014.6907828 - to create the repulsive vectors around each UAV. (still need to prove the convergence mathematically to use it).
+[3] - https://doi.org/10.48550/arXiv.1404.5828 - to create the repulsive vectors around each UAV. Proved convergence for dynamic environements.
+
+[4] - https://doi.org/10.1109/ICRA.2014.6907828 - to create the repulsive vectors around each UAV. (still need to prove the convergence mathematically to use it).
 
 ----------------------------------------------------------------------------------------------------------------------------
