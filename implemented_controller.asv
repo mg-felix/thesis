@@ -4,7 +4,7 @@ function [output] = implemented_controller(input)
 
 %% Definition of variables from input and output
 
-global vel_target_x vel_target_y radius repulsive_mine_flag repulsive_gaussian_flag theta
+global vel_target_x vel_target_y radius repulsive_gaussian_flag repulsive_bump_flag
 
 % Input
 reference_x = input(1);
@@ -56,11 +56,12 @@ e = phi - path_radius^2;
 
 v = E*grad_phi - Kn*e*grad_phi; % Vector field in the UAV position
 
-md = v/norm(v); % Unit orientation value for the vector field in the UAV position
+%% Repulsive UAVs vector design
 
-% Repulsive UAVs vector design
+r_repulsive1 = current - current2; % Creates a new vector based on the distance between the UAVs
+r_repulsive2 = current - current3; % Creates a new vector based on the distance between the UAVs
 
-repulsive_gain = 400*repulsive_mine_flag; % Chooses how strong the repulsion should be. If 0, collision avoidance is off
+% Gaussian field vector (for static objets)
 
 A = 1000;
 sigma = 100;
@@ -68,16 +69,51 @@ expected_value = [100; 100];
 
 repulsive_gaussian = repulsive_gaussian_flag*A*exp( ( -(current - expected_value)'*(current - expected_value) )/(2*sigma^2) ); % 
 
-r_repulsive1 = current - current2; % Creates a new vector based on the distance between the UAVs
-r_repulsive2 = current - current3; % Creates a new vector based on the distance between the UAVs
-
 vrepulsive = ( (r_repulsive1)/norm(r_repulsive1) + (r_repulsive2)/norm(r_repulsive2) ) * repulsive_gaussian; % Add if = 0 in division;
 
-v = v + vrepulsive; % Adds this influence to the vector field
 
-md = v/norm(v);
+% Bump function, for dynamic environments
 
-% Path following controller design
+p = 2; % Vehicle radius
+pe = eps;
+
+dm = 2*(2*p + pe); % Minimum distance
+dc = 100; %  Communication limit distance
+dr = 50; % Threshold for ativation
+
+a = -2/(dr-dc)^3; % Coefficients 
+b = (3*(dr+dc))/(dr-dc)^3;
+c = (-6*dr*dc)/(dr-dc)^3;
+d = (dc^2*(3*dc-dr))/(dr-dc)^3;
+
+dij1 = norm(r_repulsive1); % Distances between vehicles
+dij2 = norm(r_repulsive2);
+
+if dij1 >= dc
+    bump1 = 0;
+elseif (dij1 > dm && dij1 < dr)
+    bump1 = a*dij1^3 + b*dij1^2 + c*dij1 + d;
+else
+    bump1 = 10000;
+end
+
+if dij2 >= dc
+    bump2 = 0;
+elseif (dij2 > dm && dij2 < dr)
+    bump2 = a*dij2^3 + b*dij2^2 + c*dij2 + d;
+else
+    bump2 = 10000;
+end
+
+Frepulsive = repulsive_bump_flag*(r_repulsive1/norm(r_repulsive1)*bump1 + r_repulsive2/norm(r_repulsive2)*bump2); % Based on equations in 28 
+
+v = v + Frepulsive; % Adds this influence to the vector field
+
+md = v/norm(v); % Unit orientation value for the vector field in the UAV position
+
+
+
+%% Path following controller design
 
 K_delta = 30;
 
@@ -114,7 +150,7 @@ u_psi_dot = norm(r_dot)/s * (-md_dot'*E*md - K_delta*delta)/(mr'*R'*m); % Contro
 
 k1 = 0.0001; % Gain constants, > 0
 beta = 6;
-ku = 5;
+ku = 10;
 
 theta = l/radius;
 
@@ -130,15 +166,15 @@ wp = 0; % Target angular velocity
 delta_x = radius; % pf - pp = radius
 delta_y = radius;
 
-delta_l = 0;%       2*pi*radius/3; % Separation between vehicles
+delta_l = 2*pi*radius/3; % Separation between vehicles
 
 Sigma = -(vpx - wp*delta_y)*cos(psi_f) - (vpy - wp*delta_x)*sin(psi_f); 
 
-R = [cos(psi_f) sin(psi_f); -sin(psi_f) cos(psi_f)];
+R = [cos(psi_f) sin(psi_f); -sin(psi_f) cos(psi_f)]; % Rotation matrix from inertial to SF
 
-Fx = R*([current_x - radius*cos(theta); current_y - radius*sin(theta)]);
+Fxy = R*([current_x - radius*cos(theta); current_y - radius*sin(theta)]); % x and y coordinates in the SF frame
 
-Fx = Fx(1);
+Fx = Fxy(1); % Just the x coordinate
 
 l_dot = current_v*cos(psi_dash) + Sigma + k1*Fx; % Rate of progression of the virtual target along the desired path
 l_tilde = l - l_other + delta_l; % Coordination error

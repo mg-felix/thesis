@@ -74,7 +74,7 @@ title('Velocities of each UAV')
 xlabel('Time (s)')
 ylabel('Velocity (m/s)')
 
-
+numberofcollisions = sum(distance1<3) + sum(distance2<3) + sum(distance3<3)
 
 end
 
