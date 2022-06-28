@@ -1,8 +1,8 @@
 %% MAIN FILE 
 
 % Consists in values definitions and calling the simulink block diagram 
-% where the controlling loop is implemented.
-
+% where the controlling loop is implemented. After that, a function is
+% called to show the results of the simulation in a graphic way.
 
 %% Constants Definitions and Initial Conditions
 
@@ -20,12 +20,12 @@ def_seed = randi(1000); % Defines random seed for random target movement
 
 
 repulsive_gaussian_flag = 0; % 0 - turns the collision avoidance off | 1 - turns it on
-repulsive_bump_flag = 1;
+repulsive_bump_flag = 0;
 
 % TIME VARIABLES 
 
 Ts = 0.05; % Sampling time
-Ttotal = 300; % Total simulation time
+Ttotal = 100; % Total simulation time
 
 % TARGET VARIABLES
 
@@ -48,12 +48,12 @@ min_psi = -pi/4; % Minimum allowed UAV rotation (psi dot)
 
 % UAVs INITIAL CONDITIONS 
 
-drone1_x0 = 50; % Initial Coordinates for each UAV
-drone1_y0 = 50;
-drone2_x0 = 60;
-drone2_y0 = 60;
-drone3_x0 = 70;
-drone3_y0 = 70;
+drone1_x0 = 0; % Initial Coordinates for each UAV
+drone1_y0 = -200;
+drone2_x0 = -200;
+drone2_y0 = 0;
+drone3_x0 = 0;
+drone3_y0 = 200;
 
 drone1_v0 = 15; % Initial velocities for each UAV
 drone2_v0 = 20;

@@ -55,6 +55,12 @@ global drone_vertices_x drone_vertices_y target_points1 UAV_1_patch target_point
         UAV_3_patch = patch(current_y3 + drone_vertices_x, current_x3 + drone_vertices_y,'b'); % Draws new drone position
         rotate(UAV_3_patch, [0 0 1], -rad2deg(current_psi3), [current_y3 current_x3 0]); % Draws new drone orientation
         
+        
+%         h = findobj('Color','purple','Type',scatter);
+%         delete(h);
+%         
+%         scatter()
+%         
     hold on; % Keep same figure
     
     drawnow; % Update the drawings

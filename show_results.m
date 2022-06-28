@@ -76,5 +76,10 @@ ylabel('Velocity (m/s)')
 
 numberofcollisions = sum(distance1<3) + sum(distance2<3) + sum(distance3<3)
 
+ratio_not_spaced1 = (sum(distance1 > 380) + sum(distance1 < 300) ) / length(distance1)
+ratio_not_spaced2 = (sum(distance2 > 380) + sum(distance2 < 300) ) / length(distance1)
+ratio_not_spaced3 = (sum(distance3 > 380) + sum(distance3 < 300) ) / length(distance1)
+
+
 end
 
