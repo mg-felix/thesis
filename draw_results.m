@@ -2,27 +2,30 @@ function [] = draw_results(input)
 %DRAW_RESULTS Draws the new positions for target and UAVs
 
 global drone_vertices_x drone_vertices_y target_points1 UAV_1_patch target_points2 UAV_2_patch target_points3 UAV_3_patch radius circle_handle
-
+global virtual_target1 virtual_target2 virtual_target3
 
 %% Drawing
 
-    target_x1 = input(1);
+    target_x1 = -input(1);
     target_y1 = input(2);
     current_x1 = input(3);
     current_y1 = input(4);
     current_psi1 = input(5);
+    l1 = input(7);
 %
-    target_x2 = input(7);
-    target_y2 = input(8);
-    current_x2 = input(9);
-    current_y2 = input(10);
-    current_psi2 = input(11);
+    target_x2 = -input(8);
+    target_y2 = input(9);
+    current_x2 = input(10);
+    current_y2 = input(11);
+    current_psi2 = input(12);
+    l2 = input(14);
 %
-    target_x3 = input(13);
-    target_y3 = input(14);
-    current_x3 = input(15);
-    current_y3 = input(16);
-    current_psi3 = input(17);
+    target_x3 = -input(15);
+    target_y3 = input(16);
+    current_x3 = input(17);
+    current_y3 = input(18);
+    current_psi3 = input(19);
+    l3 = input(21);
 
     delete(circle_handle);
     th = 0:pi/50:2*pi;
@@ -54,6 +57,17 @@ global drone_vertices_x drone_vertices_y target_points1 UAV_1_patch target_point
         delete(UAV_3_patch); % Deletes previous patch
         UAV_3_patch = patch(current_y3 + drone_vertices_x, current_x3 + drone_vertices_y,'b'); % Draws new drone position
         rotate(UAV_3_patch, [0 0 1], -rad2deg(current_psi3), [current_y3 current_x3 0]); % Draws new drone orientation
+        
+        
+        % Virtual Particles
+        
+        clearpoints(virtual_target1);
+        addpoints(virtual_target1, radius*cos(l1/radius + pi/2) + target_x1, radius*sin(l1/radius + pi/2) + target_y1);
+        clearpoints(virtual_target2);
+        addpoints(virtual_target2, radius*cos(l2/radius + pi/2) + target_x1, radius*sin(l2/radius + pi/2) + target_y1);
+        clearpoints(virtual_target3);
+        addpoints(virtual_target3, radius*cos(l3/radius + pi/2) + target_x1, radius*sin(l3/radius + pi/2) + target_y1);
+        
         
         
 %         h = findobj('Color','purple','Type',scatter);

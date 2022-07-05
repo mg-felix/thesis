@@ -25,11 +25,11 @@ repulsive_bump_flag = 0;
 % TIME VARIABLES 
 
 Ts = 0.05; % Sampling time
-Ttotal = 100; % Total simulation time
+Ttotal = 3000; % Total simulation time
 
 % TARGET VARIABLES
 
-vel_target_x = sqrt(0^2/2);
+vel_target_x = sqrt(1^2/2);
 vel_target_y = 0;
 
 radius = 200; % Radius for the virtual references
@@ -59,9 +59,9 @@ drone1_v0 = 15; % Initial velocities for each UAV
 drone2_v0 = 20;
 drone3_v0 = 20;
 
-drone1_psi0 = 0; % In rad
-drone2_psi0 = 0;
-drone3_psi0 = 0;
+drone1_psi0 = 0.0001; % In rad
+drone2_psi0 = 0.0001;
+drone3_psi0 = 0.0001;
     
 %% Starts showing the results
 
