@@ -34,6 +34,7 @@ reference = [target_x; target_y];
 current2 = [current_x2; current_y2];
 current3 = [current_x3; current_y3];
 
+vt = [vel_target_x; vel_target_y]; % Target velocity
 
 
 %% Artificial Potential Field (APF)
@@ -117,13 +118,9 @@ v = v + Frepulsive; % Adds this influence to the vector field
 
 md = v/norm(v); % Unit orientation value for the vector field in the UAV position
 
-
-
 %% Path following controller design
 
 K_delta = 30;
-
-vt = [vel_target_x; vel_target_y]; % Target velocity
 
 alfa = current_psi; % Heading angle of UAV
 
@@ -151,16 +148,13 @@ s = current_v;
 
 u_psi_dot = norm(r_dot)/s * (-md_dot'*E*md - K_delta*delta)/(mr'*R'*m); % Control input - angular velocity
 
-
-%% Controlling the velocity to keep them equally spaced in the path
+%% Controlling the velocity
 
 k1 = 0.1; % Gain constants, > 0
 beta = 0.6;
-ku = 1;
+ku = 10;
 
 theta = wrapTo2Pi(l/radius);
-
-
 
 x_path_dot = -sin(theta);
 y_path_dot = cos(theta);
@@ -168,9 +162,12 @@ y_path_dot = cos(theta);
 psi_f = atan2( y_path_dot, x_path_dot); % Angle of tangent on the virtual particle relative to x axis in {I}
 psi_bar = wrapToPi(current_psi - psi_f); % + eps so it's never 0 (to avoid division by 0)
 
+v_d = sqrt(vt(1)^2 + vt(2)^2); % Target total velocity
 
-vpx = vt(1); % Target velocity 
-vpy = -vt(2);
+psi_d = wrapToPi(atan2(-vt(2),vt(1))); % Angle of target velocity in inercial x axis
+
+vpx = v_d*cos(psi_d); %vt(1); % Target velocity 
+vpy = v_d*sin(psi_d);%-vt(2);
 
 wp = 0; % Target angular - definir depois
 
@@ -202,9 +199,9 @@ v = (u - Sigma - k1*Fx)/abs(cos(psi_bar)); % Calculated input for velocity abs(c
 
 %% Controlling the angular velocity
 
-gama = 0.00002; % Constant positive gains
-k2 = 6;
-k_delta = 0.1;
+gama = 0.00005; % Constant positive gains
+k2 = 10;
+k_delta = 0.01;
 kl = 1/radius; % letter l, not number 1; path curvature 1/r
 
 wp_dot = 0; % Angular acceleration of target
@@ -213,8 +210,6 @@ theta_bar = pi/6; % Constants, based on the values given in the simulation resul
 theta_zeta = pi/8;
 theta_delta = theta_bar - theta_zeta;
 
-psi_d = wrapToPi(atan2(vpy,vpx)); % Angle of target velocity in inercial x axis
-
 delta = -theta_delta *tanh(k_delta * Fy); % Desired heading error introduced by the expected transient maneuver 
 
 Delta = (vpx - wp*delta_y)*sin(psi_f) - (vpy + wp*delta_x)*cos(psi_f); % Normal component of the disturbance term including the velocity of the virtual target caused by the movement of P
@@ -222,7 +217,7 @@ Delta = (vpx - wp*delta_y)*sin(psi_f) - (vpy + wp*delta_x)*cos(psi_f); % Normal 
 zeta = -asin(Delta/current_v); %  Desired heading error for psi_bar caused by Delta
 
 psi_bar_d = zeta + delta; % Desired heading error
-
+    
 psi_tilde = wrapToPi(psi_bar - psi_bar_d); %  Attitude error
 
 FwF = wp + kl*l_dot; % Angular velocity of F with respect to I, expressed in F
@@ -233,7 +228,6 @@ Fy_dot = current_v*sin(psi_bar) - FwF*Fx + Delta;
 delta_x_dot = l_dot*cos(psi_f) - wp*delta_y; 
 delta_y_dot = l_dot*sin(psi_f) + wp*delta_x;
 
-v_d = sqrt(vpx^2 + vpy^2); % Target total velocity
 v_dot_d = 0; % Target acceleration // definir posteriormente
 
 psi_dot_d = 0; % definir posteriormente com o movimento do alvo
@@ -264,16 +258,6 @@ D = current_v*tan(psi_bar);
 
 psi_dot = wp + kl*l_dot + (A + B*C) / (1 - B*D);
 
-%psi_dot = wp + kl*l_dot + psi_bar_d_dot + gama*Fy*current_v*(( sin(psi_bar) - sin(psi_bar_d) )/(psi_bar - psi_bar_d)) - k2*psi_tilde; 
-
-%% Make it different for the leader UAV
-
-% if l_dot_other == l_other && l_other == -1000
-%     v = current_v;
-%     u = l_dot;
-% end
-
-
 %% Outputs the results
 
 v_cmd = v; 
@@ -289,8 +273,8 @@ output(6) = u_dot;
 
 err = norm(current - reference) - radius;
 
-caption = sprintf('Error = %f \nDistances = %f, %f, %f\n Heading angular velocity = %f\nVelocity = %f', err, norm(current-current2), norm(current-current3), norm(current2-current3), psi_dot_cmd, v_cmd);
-title(caption, 'FontSize', 20);
+% caption = sprintf('Error = %f \nDistances = %f, %f, %f\n Heading angular velocity = %f\nVelocity = %f', err, norm(current-current2), norm(current-current3), norm(current2-current3), psi_dot_cmd, v_cmd);
+% title(caption, 'FontSize', 20);
 
 end
 

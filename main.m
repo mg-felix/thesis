@@ -25,12 +25,17 @@ repulsive_bump_flag = 0;
 % TIME VARIABLES 
 
 Ts = 0.05; % Sampling time
-Ttotal = 3000; % Total simulation time
+Ttotal = 150; % Total simulation time
 
 % TARGET VARIABLES
 
-vel_target_x = sqrt(1^2/2);
+vel_target_x = sqrt(2^2/2);
 vel_target_y = 0;
+
+a_target_x = 0;
+a_target_y = 0;
+
+w_target = 0;   
 
 radius = 200; % Radius for the virtual references
 
