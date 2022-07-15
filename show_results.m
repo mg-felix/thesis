@@ -9,19 +9,19 @@ Data = ans.simulation_data;
 reference = [Data(:,1);Data(2)];
 
 x1 = Data(:,3);
-y1 = Data(:,4); % All y with minues for xy switched
+y1 = -Data(:,4); % All y with minues for xy switched
 psi1 = Data(:,5);
 v1 = Data(:,6);
 l1 = Data(:,7);
 
 x2 = Data(:,10);
-y2 = Data(:,11);
+y2 = -Data(:,11);
 psi2 = Data(:,12);
 v2 = Data(:,13);
 l2 = Data(:,14);
 
 x3 = Data(:,17);
-y3 = Data(:,18);
+y3 = -Data(:,18);
 psi3 = Data(:,19);
 v3 = Data(:,20);
 l3 = Data(:,21);

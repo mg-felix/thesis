@@ -5,31 +5,32 @@ function [output] = implemented_controller(input)
 
 %% Definition of variables from input and output
 
-global vel_target_x vel_target_y radius repulsive_gaussian_flag repulsive_bump_flag
+global vel_target_x vel_target_y radius repulsive_gaussian_flag repulsive_bump_flag N
 
 % Input
 target_x = input(1);
 target_y = input(2);
-current_x2 = input(3); % Positions of other UAVs
-current_y2 = -input(4);
-current_x3 = input(5);
-current_y3 = -input(6);
 
-l = input(7);
+l = input(3);
 
-l_other = input(8);
-l_dot_other = input(9);
-u_other = input(10);
-u_dot_other = input(11 );
+l_other = input(4);
+l_dot_other = input(5);
+u_other = input(6);
+u_dot_other = input(7);
 
-current_x = input(12);
-current_y = -input(13);
-current_psi = -wrapToPi(input(14));
-current_v = input(15);
-current_psi_dot = input(16);
+current_x = input(8);
+current_y = -input(9);
+current_psi = -wrapToPi(input(10));
+current_v = input(11);
+current_psi_dot = input(12);
 
 current = [current_x; current_y];
 reference = [target_x; target_y];
+
+current_x2 = 0;
+current_x3 = 0;
+current_y2 = 0;
+current_y3 = 0;
 
 current2 = [current_x2; current_y2];
 current3 = [current_x3; current_y3];
@@ -150,16 +151,16 @@ u_psi_dot = norm(r_dot)/s * (-md_dot'*E*md - K_delta*delta)/(mr'*R'*m); % Contro
 
 %% Controlling the velocity
 
-k1 = 0.1; % Gain constants, > 0
-beta = 0.6;
-ku = 10;
+k1 = 0.5; % Gain constants, > 0
+beta = 6; % How fast it is to converge to the wanted distances between UAVs
+ku = 0.1; % Increase to speed convergence to distance between UAVs, but it's not as smooth
 
 theta = wrapTo2Pi(l/radius);
 
 x_path_dot = -sin(theta);
 y_path_dot = cos(theta);
 
-psi_f = atan2( y_path_dot, x_path_dot); % Angle of tangent on the virtual particle relative to x axis in {I}
+psi_f = atan2( y_path_dot, x_path_dot) % Angle of tangent on the virtual particle relative to x axis in {I}
 psi_bar = wrapToPi(current_psi - psi_f); % + eps so it's never 0 (to avoid division by 0)
 
 v_d = sqrt(vt(1)^2 + vt(2)^2); % Target total velocity
@@ -174,7 +175,7 @@ wp = 0; % Target angular - definir depois
 delta_x = radius*sin(theta); % pf - pp; Comes from virtual particle generated in simulink
 delta_y = -radius*cos(theta);
 
-delta_l = 2*pi*radius/3; % Separation between vehicles
+delta_l = 2*pi*radius/N; % Separation between vehicles: - ahead + behind
 
 Sigma = -(vpx - wp*delta_y)*cos(psi_f) - (vpy + wp*delta_x)*sin(psi_f); 
 
@@ -199,9 +200,9 @@ v = (u - Sigma - k1*Fx)/abs(cos(psi_bar)); % Calculated input for velocity abs(c
 
 %% Controlling the angular velocity
 
-gama = 0.00005; % Constant positive gains
-k2 = 10;
-k_delta = 0.01;
+gama = 0.05; % Constant positive gains
+k2 = 6;
+k_delta = 20; %1 and 10 also works fine || Does not affect convergence. Too high the system is too "shaky". Too low gets oscilations with long periods
 kl = 1/radius; % letter l, not number 1; path curvature 1/r
 
 wp_dot = 0; % Angular acceleration of target

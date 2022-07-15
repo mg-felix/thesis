@@ -6,21 +6,21 @@ global virtual_target1 virtual_target2 virtual_target3
 
 %% Drawing
 
-    target_x1 = input(1); % All x with minus for xy coordinates switched
+    target_x1 = -input(1); % All x with minus for xy coordinates switched
     target_y1 = input(2);
     current_x1 = input(3);
     current_y1 = input(4);
     current_psi1 = input(5);
     l1 = input(7);
 %
-    target_x2 = input(8);
+    target_x2 = -input(8);
     target_y2 = input(9);
     current_x2 = input(10);
     current_y2 = input(11);
     current_psi2 = input(12);
     l2 = input(14);
 %
-    target_x3 = input(15);
+    target_x3 = -input(15);
     target_y3 = input(16);
     current_x3 = input(17);
     current_y3 = input(18);
@@ -62,11 +62,11 @@ global virtual_target1 virtual_target2 virtual_target3
         % Virtual Particles
         
         clearpoints(virtual_target1);
-        addpoints(virtual_target1, radius*sin(l1/radius) + target_x1, radius*cos(l1/radius) + target_y1);
+        addpoints(virtual_target1, radius*cos(l1/radius + pi/2) + target_x1, radius*sin(l1/radius + pi/2) + target_y1);
         clearpoints(virtual_target2);
-        addpoints(virtual_target2, radius*sin(l2/radius) + target_x1, radius*cos(l2/radius) + target_y1);
+        addpoints(virtual_target2, radius*cos(l2/radius + pi/2) + target_x1, radius*sin(l2/radius + pi/2) + target_y1);
         clearpoints(virtual_target3);
-        addpoints(virtual_target3, radius*sin(l3/radius) + target_x1, radius*cos(l3/radius) + target_y1);
+        addpoints(virtual_target3, radius*cos(l3/radius + pi/2) + target_x1, radius*sin(l3/radius + pi/2) + target_y1);
         
         
         
