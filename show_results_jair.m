@@ -101,10 +101,6 @@ ylabel('Distance (m)')
 % xlabel('Time (s)')
 % ylabel('Velocity (m/s)')
 
-size(gamma1)
-size(gamma2)
-delta_gamma
-
 figure;
 plot(0:Ts:length(err2)*Ts - Ts,gamma1-gamma2 + delta_gamma,'r')
 hold on;
