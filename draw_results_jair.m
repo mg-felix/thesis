@@ -1,4 +1,4 @@
-function [] = draw_results(input)
+function [] = draw_results_jair(input)
 %DRAW_RESULTS Draws the new positions for target and UAVs
 
 global drone_vertices_x drone_vertices_y target_points1 UAV_1_patch target_points2 UAV_2_patch target_points3 UAV_3_patch radius circle_handle
@@ -11,22 +11,34 @@ global virtual_target1 virtual_target2 virtual_target3
     current_x1 = input(3);
     current_y1 = input(4);
     current_psi1 = input(5);
-    l1 = input(7);
+    current_v1 = input(6);
+    gamma1 = input(7);
+    ex1 = input(8);
+    ey1 = input(9);
+    gamma_dot1 = input(10);
 %
-    target_x2 = input(8);
-    target_y2 = input(9);
-    current_x2 = input(10);
-    current_y2 = input(11);
-    current_psi2 = input(12);
-    l2 = input(14);
+    target_x2 = input(11);
+    target_y2 = input(12);
+    current_x2 = input(13);
+    current_y2 = input(14);
+    current_psi2 = input(15);
+    current_v2 = input(16);
+    gamma2 = input(17);
+    ex2 = input(18);
+    ey2 = input(19);
+    gamma_dot2 = input(20);
 %
-    target_x3 = input(15);
-    target_y3 = input(16);
-    current_x3 = input(17);
-    current_y3 = input(18);
-    current_psi3 = input(19);
-    l3 = input(21);
-
+    target_x3 = input(21);
+    target_y3 = input(22);
+    current_x3 = input(23);
+    current_y3 = input(24);
+    current_psi3 = input(25);
+    current_v3 = input(26);
+    gamma3 = input(27);
+    ex3 = input(28);
+    ey3 = input(29);
+    gamma_dot3 = input(30);
+ 
     delete(circle_handle);
     th = 0:pi/50:2*pi;
     xunit = radius * cos(th) + target_x1;
@@ -62,11 +74,11 @@ global virtual_target1 virtual_target2 virtual_target3
         % Virtual Particles
         
         clearpoints(virtual_target1);
-        addpoints(virtual_target1, radius*sin(l1/radius) + target_x1, radius*cos(l1/radius) + target_y1);
+        addpoints(virtual_target1, radius*sin(gamma1/radius) + target_x1, radius*cos(gamma1/radius) + target_y1);
         clearpoints(virtual_target2);
-        addpoints(virtual_target2, radius*sin(l2/radius) + target_x1, radius*cos(l2/radius) + target_y1);
+        addpoints(virtual_target2, radius*sin(gamma2/radius) + target_x1, radius*cos(gamma2/radius) + target_y1);
         clearpoints(virtual_target3);
-        addpoints(virtual_target3, radius*sin(l3/radius) + target_x1, radius*cos(l3/radius) + target_y1);
+        addpoints(virtual_target3, radius*sin(gamma3/radius) + target_x1, radius*cos(gamma3/radius) + target_y1);
         
         
         
