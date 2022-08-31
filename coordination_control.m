@@ -4,7 +4,7 @@ function output = coordination_control(input)
 
 %% Defines the inputs
 
-global radius
+global delta_gamma
 
 gamma = input(1);
 gamma_other = input(2);
@@ -17,7 +17,6 @@ gamma_dot_other = input(3);
 Ku = 0.1;
 beta = 50;
 
-delta_gamma = 2*pi*radius/3;
 gamma_tilde = gamma - gamma_other + delta_gamma;
 gamma_dot = gamma_dot_other - beta*tanh(Ku*gamma_tilde);
 

@@ -12,8 +12,8 @@ reference = [Data(:,1);Data(2)];
 
 x1 = Data(:,3);
 y1 = Data(:,4); % All y with minues for xy switched
-psi1 = Data(:,5);
-v1 = Data(:,6);
+%psi1 = Data(:,5);
+%v1 = Data(:,6);
 gamma1 = Data(:,7);
 e1x = Data(:,8);
 e1y = Data(:,9);
@@ -21,8 +21,8 @@ gamma_dot1 = Data(:,10);
 
 x2 = Data(:,13);
 y2 = Data(:,14);
-psi2 = Data(:,15);
-v2 = Data(:,16);
+%psi2 = Data(:,15);
+%v2 = Data(:,16);
 gamma2 = Data(:,17);
 e2x = Data(:,18);
 e2y = Data(:,19);
@@ -30,8 +30,8 @@ gamma_dot2 = Data(:,20);
 
 x3 = Data(:,23);
 y3 = Data(:,24);
-psi3 = Data(:,25);
-v3 = Data(:,26);
+%psi3 = Data(:,25);
+%v3 = Data(:,26);
 gamma3 = Data(:,27);
 e3x = Data(:,28);
 e3y = Data(:,29);
@@ -101,8 +101,12 @@ ylabel('Distance (m)')
 % xlabel('Time (s)')
 % ylabel('Velocity (m/s)')
 
+size(gamma1)
+size(gamma2)
+delta_gamma
+
 figure;
-plot(0:Ts:length(err2)*Ts - Ts,gamma1-gamma2+delta_gamma,'r')
+plot(0:Ts:length(err2)*Ts - Ts,gamma1-gamma2 + delta_gamma,'r')
 hold on;
 plot(0:Ts:length(err2)*Ts - Ts,gamma1-gamma3,'g')
 hold on;

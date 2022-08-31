@@ -10,7 +10,7 @@ clear all;
 clc;
 close all;
 
-global Ts Ttotal x0 y0 def_seed vel_target_x vel_target_y radius
+global Ts Ttotal x0 y0 def_seed vel_target_x vel_target_y radius delta_gamma
 global max_vel min_vel max_psi min_psi % Global variables to be used throughout the program
 global drone1_x0 drone1_y0 drone2_x0 drone2_y0 drone3_x0 drone3_y0 drone1_psi0 drone2_psi0 drone3_psi0 N
 
@@ -19,8 +19,8 @@ def_seed = randi(1000); % Defines random seed for random target movement
 % TIME VARIABLES 
        
 fs = 20;
-Ts = 1/20; % Sampling time
-Ttotal = 150; % Total simulation time
+Ts = 1/fs; % Sampling time
+Ttotal = 50; % Total simulation time
 
 % TARGET VARIABLES
 
@@ -59,6 +59,10 @@ drone3_v0 = 20;
 drone1_psi0 = 0; % In rad
 drone2_psi0 = 0;
 drone3_psi0 = 0;
+
+% PARTICLE VARIABLES
+
+delta_gamma = 2*pi*radius/3;
     
 %% Starts showing the results
 
@@ -72,4 +76,4 @@ sim('jair_architecture');
 
 close all;
 
-show_results(ans);
+show_results_jair(ans.simulation_data);
