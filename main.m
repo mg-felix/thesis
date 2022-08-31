@@ -25,12 +25,7 @@ Ttotal = 150; % Total simulation time
 % TARGET VARIABLES
 
 vel_target_x = sqrt(3^2/2);
-vel_target_y = sqrt(3^2/2);;
-
-a_target_x = 0;
-a_target_y = 0;
-
-w_target = 0;   
+vel_target_y = sqrt(3^2/2);
 
 radius = 200; % Radius for the virtual references
 
@@ -51,19 +46,19 @@ min_psi = -pi/4; % Minimum allowed UAV rotation (psi dot)
 % UAVs INITIAL CONDITIONS 
 
 drone1_x0 = -200; % Initial Coordinates for each UAV
-drone1_y0 = -200;
+drone1_y0 = -100;
 drone2_x0 = -200;
-drone2_y0 = -250;
+drone2_y0 = -200;
 drone3_x0 = -200;
 drone3_y0 = -300;
 
-drone1_v0 = 15; % Initial velocities for each UAV
+drone1_v0 = 20; % Initial velocities for each UAV
 drone2_v0 = 20;
 drone3_v0 = 20;
 
-drone1_psi0 = 0.0001; % In rad
-drone2_psi0 = 0.0001;
-drone3_psi0 = 0.0001;
+drone1_psi0 = 0; % In rad
+drone2_psi0 = 0;
+drone3_psi0 = 0;
     
 %% Starts showing the results
 

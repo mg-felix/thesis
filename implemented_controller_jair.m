@@ -11,11 +11,11 @@ target_y = input(2);
 gamma = input(3);
 gamma_dot = input(4);
 
-current_x = input(4);
-current_y = input(5);
-current_psi = wrapToPi(input(6));
-%current_v = input(7);
-%current_psi_dot = input(8);
+current_x = input(5);
+current_y = input(6);
+current_psi = wrapToPi(input(7));
+%current_v = input(8);
+%current_psi_dot = input(9);
 
 current_pos = [current_x; current_y];
 
@@ -43,7 +43,7 @@ R_R_I = [cos(current_psi) -sin(current_psi); sin(current_psi) cos(current_psi)];
 
 e = R_R_I'*(current_pos - particle_pos) + eps;
 
-vd = gamma_dot; % Constant speed to be tracked - particle speed along the path
+vd = gamma_dot; % >Speed to be tracked - particle speed along the path
 
 u = Delta_mp_pseudo*( -Kp*e + R_R_I'*target_vel + R_R_I'*(dpdgamma*vd)); % Equation 3.8
 
