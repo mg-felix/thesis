@@ -100,15 +100,15 @@ ylabel('Distance (m)')
 % title('Velocities of each UAV')
 % xlabel('Time (s)')
 % ylabel('Velocity (m/s)')
-
-figure;
-plot(0:Ts:length(err2)*Ts - Ts,gamma1-gamma2 + delta_gamma,'r')
-hold on;
-plot(0:Ts:length(err2)*Ts - Ts,gamma1-gamma3,'g')
-hold on;
-title('Parameterized distances between UAVs')
-xlabel('Time (s)')
-ylabel('Arc distance (m)')
+% 
+% figure;
+% plot(0:Ts:length(err2)*Ts - Ts,gamma1-gamma2 + delta_gamma,'r')
+% hold on;
+% plot(0:Ts:length(err2)*Ts - Ts,gamma1-gamma3,'g')
+% hold on;
+% title('Parameterized distances between UAVs')
+% xlabel('Time (s)')
+% ylabel('Arc distance (m)')
 
 
 figure;
@@ -131,15 +131,15 @@ title('MPF Error in y over time for each UAV')
 xlabel('Time (s)')
 ylabel('Error in y (m)')
 
-figure;
-plot(0:Ts:length(e1y)*Ts - Ts,gamma_dot1(:,1),'r')
-hold on;
-plot(0:Ts:length(e2y)*Ts - Ts,gamma_dot2(:,1),'g')
-hold on;
-plot(0:Ts:length(e3y)*Ts - Ts,gamma_dot3(:,1),'b')
-title('Velocity over time for each virtual particle')
-xlabel('Time (s)')
-ylabel('Velocity (m/s)')
+% figure;
+% plot(0:Ts:length(e1y)*Ts - Ts,gamma_dot1(:,1),'r')
+% hold on;
+% plot(0:Ts:length(e2y)*Ts - Ts,gamma_dot2(:,1),'g')
+% hold on;
+% plot(0:Ts:length(e3y)*Ts - Ts,gamma_dot3(:,1),'b')
+% title('Velocity over time for each virtual particle')
+% xlabel('Time (s)')
+% ylabel('Velocity (m/s)')
 
 % numberofcollisions = sum(distance1<3) + sum(distance2<3) + sum(distance3<3)
 % 

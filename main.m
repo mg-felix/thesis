@@ -10,7 +10,7 @@ clear all;
 clc;
 close all;
 
-global Ts Ttotal x0 y0 def_seed vel_target_x vel_target_y radius delta_gamma
+global Ts Ttotal x0 y0 def_seed vel_target_x vel_target_y radius delta_gamma gamma_dot_leader
 global max_vel min_vel max_psi min_psi % Global variables to be used throughout the program
 global drone1_x0 drone1_y0 drone2_x0 drone2_y0 drone3_x0 drone3_y0 drone1_psi0 drone2_psi0 drone3_psi0 N
 
@@ -18,14 +18,14 @@ def_seed = randi(1000); % Defines random seed for random target movement
 
 % TIME VARIABLES 
        
-fs = 20;
+fs = 100;
 Ts = 1/fs; % Sampling time
-Ttotal = 50; % Total simulation time
+Ttotal = 200; % Total simulation time
 
 % TARGET VARIABLES
 
-vel_target_x = sqrt(3^2/2);
-vel_target_y = sqrt(3^2/2);
+vel_target_x = sqrt(2^2/2);
+vel_target_y = sqrt(2^2/2);
 
 radius = 200; % Radius for the virtual references
 
@@ -63,6 +63,7 @@ drone3_psi0 = 0;
 % PARTICLE VARIABLES
 
 delta_gamma = 2*pi*radius/3;
+gamma_dot_leader = 15;
     
 %% Starts showing the results
 

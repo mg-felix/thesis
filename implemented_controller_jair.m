@@ -21,11 +21,11 @@ current_pos = [current_x; current_y];
 
 %% Jair Controller
 
-Kp = diag([1e1 1e1]);
+Kp = diag([1e1 5e0]);
 
 eps1 = 1;     % Remark 8 in chapter 5
 eps2 = 0; % Constant vector that can be made arbitrarily small
-% E.G: ε1 ̸= 0, and ε2 = ε3 = 0 (doesn't work: Delta+ = NaN)
+% E.G: ε1 ̸= 0, and ε2 = 0
 
 eps = [eps1;eps2];
 
@@ -43,7 +43,7 @@ R_R_I = [cos(current_psi) -sin(current_psi); sin(current_psi) cos(current_psi)];
 
 e = R_R_I'*(current_pos - particle_pos) + eps;
 
-vd = gamma_dot; % >Speed to be tracked - particle speed along the path
+vd = gamma_dot; % Speed to be tracked - particle speed along the path
 
 u = Delta_mp_pseudo*( -Kp*e + R_R_I'*target_vel + R_R_I'*(dpdgamma*vd)); % Equation 3.8
 
