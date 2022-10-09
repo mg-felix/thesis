@@ -4,7 +4,7 @@ function [output] = implemented_controller_jair(input)
 
 %% Define inputs
 
-global vel_target_x vel_target_y radius
+global radius
 
 target_x = input(1);
 target_y = input(2);
@@ -17,11 +17,14 @@ current_psi = wrapToPi(input(7));
 %current_v = input(8);
 %current_psi_dot = input(9);
 
+vel_target_x = input(10);
+vel_target_y = input(11);
+
 current_pos = [current_x; current_y];
 
 %% Jair Controller
 
-Kp = diag([1e1 5e0]);
+Kp = diag([5 8e-2]);
 
 eps1 = 1;     % Remark 8 in chapter 5
 eps2 = 0; % Constant vector that can be made arbitrarily small
@@ -56,6 +59,8 @@ output(1) = v_cmd;
 output(2) = psi_dot_cmd;
 output(3) = e(1);
 output(4) = e(2);
+
+
 
 
 end
