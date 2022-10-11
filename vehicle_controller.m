@@ -12,7 +12,7 @@ global radius
 target_x = input(1);
 target_y = input(2);
 gamma = input(3);
-gamma_dot = input(4);
+%gamma_dot = input(4);
 
 current_x = input(5);
 current_y = input(6);
@@ -27,7 +27,7 @@ current_pos = [current_x; current_y];
 
 %% Jair Controller
 
-Kp = diag([8e0 7e-2]);
+Kp = diag([9e-1 5e-2]);
 
 eps1 = 1;     % Remark 8 in chapter 5
 eps2 = 0; % Constant vector that can be made arbitrarily small
