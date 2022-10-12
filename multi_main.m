@@ -10,7 +10,7 @@ clear all;
 clc;
 close all;
 
-global Ts Ttotal x0 y0 radius delta_gamma gamma_dot_leader volta
+global Ts Ttotal x0 y0 radius delta_gamma gamma_dot_leader volta step_size
 global max_vel min_vel max_psi min_psi % Global variables to be used throughout the program
 global drone1_x0 drone1_y0 drone2_x0 drone2_y0 drone3_x0 drone3_y0 drone1_psi0 drone2_psi0 drone3_psi0 N
 global target_velocity_amplitude target_velocity_frequency target_psi_dot_amplitude target_psi_dot_frequency target_velocity_bias
@@ -19,6 +19,7 @@ global target_velocity_amplitude target_velocity_frequency target_psi_dot_amplit
        
 fs = 20;
 Ts = 1/fs; % Sampling time
+step_size = 0.05;
 Ttotal = 200; % Total simulation time
 
 % TARGET VARIABLES

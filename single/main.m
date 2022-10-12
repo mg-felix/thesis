@@ -19,7 +19,7 @@ def_seed = randi(1000); % Defines random seed for random target movement
 
 % TIME VARIABLES 
        
-fs = 20;
+fs = 100;
 Ts = 1/fs; % Sampling time
 Ttotal = 100; % Total simulation time
 
