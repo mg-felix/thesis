@@ -29,7 +29,7 @@ current_pos = [current_x; current_y];
 
 Kp = diag([9e-1 5e-2]);
 
-eps1 = 10;     % Remark 8 in chapter 5
+eps1 = 1;     % Remark 8 in chapter 5
 eps2 = 0; % Constant vector that can be made arbitrarily small
 % E.G: ε1 ̸= 0, and ε2 = 0
 
