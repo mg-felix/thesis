@@ -15,7 +15,7 @@ gamma_dot_other = input(3);
 % Gains
 
 Ku = 0.1;
-beta = 50;
+beta = 2;
 
 gamma_tilde = gamma - gamma_other + delta_gamma;
 gamma_dot = gamma_dot_other - beta*tanh(Ku*gamma_tilde);

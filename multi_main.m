@@ -19,7 +19,7 @@ global target_velocity_amplitude target_velocity_frequency target_psi_dot_amplit
        
 fs = 20;
 Ts = 1/fs; % Sampling time
-step_size = 0.05;
+step_size = 0.1;
 Ttotal = 200; % Total simulation time
 
 % TARGET VARIABLES
