@@ -19,16 +19,16 @@ global target_velocity_amplitude target_velocity_frequency target_psi_dot_amplit
        
 fs = 20;
 Ts = 1/fs; % Sampling time
-step_size = 0.1;
+step_size = 0.05;
 Ttotal = 200; % Total simulation time
 
 % TARGET VARIABLES
 
-target_velocity_amplitude = 0;%0.1;
-target_velocity_frequency = 0;%0.07;
+target_velocity_amplitude = 0.1;
+target_velocity_frequency = 0.07;
 target_velocity_bias = 0;%0;
-target_psi_dot_amplitude = 0;%0.02;
-target_psi_dot_frequency = 0;%0.03;
+target_psi_dot_amplitude = 0.02;
+target_psi_dot_frequency = 0.03;
 
 
 radius = 200; % Radius for the virtual references

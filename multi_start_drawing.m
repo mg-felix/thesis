@@ -13,7 +13,7 @@ drone_vertices_x = 0.5*[0 3 6 3] - 3;
 drone_vertices_y = 0.5*[0 1 0 5] - 2.5;
 
 FigureHandle = figure('Name', 'Simulation results', 'NumberTitle', 'off');
-FigureHandle.Position = [500,600,500,600];
+FigureHandle.Position = [200,150,1200,1200];
 AxesHandle = axes('Parent', FigureHandle);
 axis equal
 box(AxesHandle, 'on');
@@ -33,8 +33,9 @@ hold on
 plot(AxesHandle,xlim_1,ylim_2)
 
 title('Position of UAVs and virtual targets');
-xlabel('Y (m)');
-ylabel('X (m)');
+xlabel('East (m)');
+ylabel('North (m)');
+grid on;
 
 % Target points and UAV patch for UAV 1
 target_points1 = animatedline('Marker','o','Color','r');
